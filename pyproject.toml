@@ -7,6 +7,11 @@ dependencies = ["django>=4.2"]
 license = "MIT"
 readme = "README.md"
 
+[project.urls]
+Homepage = "https://github.com/kujov/django-tw"
+Source = "https://github.com/kujov/django-tw"
+Issues = "https://github.com/kujov/django-tw/issues"
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
