@@ -1,4 +1,4 @@
-# django-wind
+# django-tw
 
 Zero-config Tailwind CSS v4 for Django. Auto-downloads the standalone CLI, discovers your templates, and watches for changes when you run `runserver`.
 
@@ -7,7 +7,7 @@ No Node.js. No config files. No build step to remember.
 ## Setup
 
 ```bash
-pip install django-wind
+pip install django-tw
 ```
 
 Add it to the top of `INSTALLED_APPS`:
