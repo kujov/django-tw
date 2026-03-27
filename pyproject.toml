@@ -1,6 +1,6 @@
 [project]
 name = "django-tw"
-version = "0.1.2"
+dynamic = ["version"]
 description = "Zero-config Tailwind CSS v4 for Django"
 requires-python = ">=3.10"
 dependencies = ["django>=4.2"]
@@ -13,8 +13,10 @@ Source = "https://github.com/kujov/django-tw"
 Issues = "https://github.com/kujov/django-tw/issues"
 
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=68", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
 
 [tool.setuptools.packages.find]
 where = ["src"]
