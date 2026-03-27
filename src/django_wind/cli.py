@@ -112,4 +112,6 @@ def run_watch(cli_path: Path, input_css: Path, output_css: Path) -> subprocess.P
     output_css.parent.mkdir(parents=True, exist_ok=True)
     return subprocess.Popen(
         [str(cli_path), "--input", str(input_css), "--output", str(output_css), "--watch"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
