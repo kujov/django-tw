@@ -3,6 +3,7 @@ import platform
 import stat
 import subprocess
 import sys
+import sysconfig
 import urllib.request
 from pathlib import Path
 
@@ -10,6 +11,10 @@ from .conf import WindConfig
 
 GITHUB_REPO = "tailwindlabs/tailwindcss"
 RELEASE_URL = f"https://github.com/{GITHUB_REPO}/releases"
+
+
+def _is_musl() -> bool:
+    return "musl" in (sysconfig.get_config_var("HOST_GNU_TYPE") or "")
 
 
 def _platform_binary() -> str:
@@ -33,6 +38,8 @@ def _platform_binary() -> str:
         raise RuntimeError(f"Unsupported architecture: {machine}")
 
     name = f"tailwindcss-{os_name}-{arch}"
+    if os_name == "linux" and _is_musl():
+        name += "-musl"
     if os_name == "windows":
         name += ".exe"
     return name

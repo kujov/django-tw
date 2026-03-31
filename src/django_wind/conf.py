@@ -37,7 +37,7 @@ class WindConfig:
 
     @property
     def bin_dir(self) -> Path:
-        d = Path.home() / ".django-wind" / "bin"
+        d = self.dot_wind_dir / "bin"
         d.mkdir(parents=True, exist_ok=True)
         return d
 
