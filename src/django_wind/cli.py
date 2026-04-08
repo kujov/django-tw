@@ -75,6 +75,12 @@ def _download(url: str, dest: Path, stdout_write=None) -> None:
         stdout_write("\n")
 
 
+def _make_executable(p: Path) -> Path:
+    if sys.platform != "win32":
+        p.chmod(p.stat().st_mode | stat.S_IEXEC)
+    return p
+
+
 def ensure_cli(config: WindConfig, stdout_write=None) -> Path:
     if config.cli_path:
         p = Path(config.cli_path)
@@ -88,23 +94,17 @@ def ensure_cli(config: WindConfig, stdout_write=None) -> Path:
     if version == "latest":
         cached = list(config.bin_dir.glob(f"tailwindcss-*-{binary_name.split('-', 1)[1]}"))
         if cached:
-            return sorted(cached)[-1]
+            return _make_executable(sorted(cached)[-1])
         version = _resolve_latest_version()
 
     dest = config.bin_dir / f"tailwindcss-{version}-{binary_name.split('-', 1)[1]}"
-    if dest.exists():
-        return dest
+    if not dest.exists():
+        url = f"{RELEASE_URL}/download/{version}/{binary_name}"
+        if stdout_write:
+            stdout_write(f"Downloading Tailwind CSS CLI ({version})...\n")
+        _download(url, dest, stdout_write)
 
-    url = f"{RELEASE_URL}/download/{version}/{binary_name}"
-    if stdout_write:
-        stdout_write(f"Downloading Tailwind CSS CLI ({version})...\n")
-
-    _download(url, dest, stdout_write)
-
-    if sys.platform != "win32":
-        dest.chmod(dest.stat().st_mode | stat.S_IEXEC)
-
-    return dest
+    return _make_executable(dest)
 
 
 def run_build(cli_path: Path, input_css: Path, output_css: Path) -> subprocess.CompletedProcess:
