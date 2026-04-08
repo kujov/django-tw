@@ -10,6 +10,7 @@ class WindConfig:
     cli_version: str = "latest"
     cli_path: str | None = None
     extra_sources: list[str] = field(default_factory=list)
+    extra_css: list[str] = field(default_factory=list)
     input_css: str | None = None
 
     @property
@@ -49,5 +50,6 @@ def get_config() -> WindConfig:
         cli_version=overrides.get("CLI_VERSION", "latest"),
         cli_path=overrides.get("CLI_PATH"),
         extra_sources=overrides.get("EXTRA_SOURCES", []),
+        extra_css=overrides.get("EXTRA_CSS", []),
         input_css=overrides.get("INPUT_CSS"),
     )

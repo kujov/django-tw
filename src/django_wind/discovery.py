@@ -36,6 +36,10 @@ def generate_input_css(config: WindConfig) -> Path:
     for pattern in config.extra_sources:
         lines.append(f'@source "{pattern}";')
 
+    if config.extra_css:
+        lines.append("")
+        lines.extend(config.extra_css)
+
     css_path = config.input_css_path
     css_path.parent.mkdir(parents=True, exist_ok=True)
     css_path.write_text("\n".join(lines) + "\n")
